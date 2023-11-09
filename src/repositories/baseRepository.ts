@@ -4,19 +4,19 @@ import baseODMInterface from "../interfaces/baseODMInterface";
 export default abstract class baseRepository implements baseODMInterface {
     public abstract model: Model<any>;
 
-    getAll() {
+    public getAll() {
+        console.log(this.model.find({}));
+    };
+    public findById(id: Number) {
+
+    };
+    public create(data: String[]) {
+
+    };
+    public update(data: String[], id: Number) {
         
     };
-    findById(id: Number) {
-
-    };
-    create(data: String[]) {
-
-    };
-    update(data: String[], id: Number) {
-
-    };
-    delete(id: Number) {
+    public delete(id: Number) {
 
     };
 

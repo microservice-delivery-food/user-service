@@ -2,8 +2,11 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose'
 import dotenv from 'dotenv';
 
+import 'reflect-metadata';
+
 import userRoute from './routes/v1/user';
 import authRoute from './routes/v1/auth';
+import userRepository from './repositories/userRepository';
 
 const app: Application = express();
 
@@ -16,6 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/auth', authRoute);
 
+app.get('/' , (req: Request , res : Response) => {
+   console.log((new userRepository()).getAll())
+
+  res.send('aaa');
+})
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const err = new Error('Not Found');

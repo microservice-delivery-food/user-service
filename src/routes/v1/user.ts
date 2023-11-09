@@ -4,7 +4,7 @@ const userRoute = express.Router();
 
 userRoute.get('/', (req: Request, res: Response) => {
     const { name } = req.params;
-    res.send(`Hello, ${name}`);
+    res.send(`Heaaaallo, ${name}`);
 });
 
 export default userRoute;

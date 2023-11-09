@@ -1,10 +1,12 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { Container } from 'typedi';
+
+import { authController } from '../../controllers/api/v1/authController';
 
 const userRoute = express.Router();
 
-userRoute.get('/', (req: Request, res: Response) => {
-    const { name } = req.params;
-    res.send(`Hello, ${name}`);
-});
+const AuthController = Container.get(authController);
+
+userRoute.get('/', AuthController.index);
 
 export default userRoute;
