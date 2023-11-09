@@ -13,17 +13,10 @@ const app: Application = express();
 dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(authenticate);
 
 // routes
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/auth', authRoute);
-
-app.get('/' , (req: Request , res : Response) => {
-   console.log((new userRepository()).getAll())
-
-  res.send('aaa');
-})
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const err = new Error('Not Found');

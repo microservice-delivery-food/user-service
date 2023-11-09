@@ -1,11 +1,11 @@
 import { Service } from "typedi";
 
-import UserRepositoryInterface from "../interfaces/userInterface";
+import userRepositoryInterface from "../interfaces/userInterface";
 import user from "../models/user";
 import baseRepository from "./baseRepository";
 
 @Service()
-class userRepository extends baseRepository implements UserRepositoryInterface{
+class userRepository extends baseRepository implements userRepositoryInterface{
     model = user;
 
 

@@ -7,6 +7,10 @@ const userRoute = express.Router();
 
 const AuthController = Container.get(authController);
 
-userRoute.get('/', AuthController.index);
+userRoute.get('/login', AuthController.login);
+userRoute.post('/register', AuthController.register);
+userRoute.get('/me', AuthController.me);
+userRoute.post('/logout', AuthController.logout);
+userRoute.post('/refresh', AuthController.refresh);
 
 export default userRoute;

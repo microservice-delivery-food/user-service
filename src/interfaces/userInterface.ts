@@ -1,7 +1,7 @@
 import baseODMInterface from "./baseODMInterface";
 
-interface UserRepositoryInterface extends baseODMInterface {
+interface userRepositoryInterface extends baseODMInterface {
 
 }
 
-export default UserRepositoryInterface;
+export default userRepositoryInterface;
