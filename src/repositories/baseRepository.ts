@@ -4,11 +4,12 @@ import baseODMInterface from "../interfaces/baseODMInterface";
 export default abstract class baseRepository implements baseODMInterface {
     public abstract model: Model<any>;
 
-    public getAll() {
-        console.log(this.model.find({}));
+    public async getAll() {
+        return await this.model.find({});
     };
 
     public findById(id: Number) {
+        return this.model.findById(id);
 
     };
 
@@ -16,12 +17,14 @@ export default abstract class baseRepository implements baseODMInterface {
         return await this.model.create(data);
     };
 
-    public update(data: String[], id: Number) {
-
+    public update(data: Object, id: Number) {
+        return this.model.findOneAndUpdate({
+            _id: id
+        }, data);
     };
 
     public delete(id: Number) {
-
+        return this.model.findById(id).deleteOne();
     };
 
 }

@@ -11,12 +11,13 @@ export class authController {
         this.userRepo = userRepo;
     }
 
-    login = (req: Request, res: Response) => {
+    login = async (req: Request, res: Response) => {
 
         const {name} = req.body;
 
+        const data = await this.userRepo.getAll();
 
-        res.send(`Hello aaaaaAli, ${name}`);
+        res.send(data);
     };
 
     register = async (req: Request, res: Response) => {
