@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import {Schema, model} from "mongoose";
 
 interface userInterface {
     name: String,
@@ -7,10 +7,10 @@ interface userInterface {
 }
 
 const userSchema = new Schema<userInterface>({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-}, { timestamps: true })
+    name: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+}, {timestamps: true})
 
 
 export default model<userInterface>('User', userSchema);    

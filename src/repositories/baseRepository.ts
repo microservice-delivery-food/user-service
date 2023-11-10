@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import {Model} from "mongoose";
 import baseODMInterface from "../interfaces/baseODMInterface";
 
 export default abstract class baseRepository implements baseODMInterface {
@@ -7,15 +7,19 @@ export default abstract class baseRepository implements baseODMInterface {
     public getAll() {
         console.log(this.model.find({}));
     };
+
     public findById(id: Number) {
 
     };
-    public create(data: String[]) {
+
+    public async create(data: Object) {
+        return await this.model.create(data);
+    };
+
+    public update(data: String[], id: Number) {
 
     };
-    public update(data: String[], id: Number) {
-        
-    };
+
     public delete(id: Number) {
 
     };

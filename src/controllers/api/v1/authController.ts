@@ -11,26 +11,31 @@ export class authController {
         this.userRepo = userRepo;
     }
 
-
     login = (req: Request, res: Response) => {
 
-        const {name} = req.params;
+        const {name} = req.body;
 
 
         res.send(`Hello aaaaaAli, ${name}`);
     };
 
-    register = (req: Request, res: Response) => {
-        const {name} = req.params;
+    register = async (req: Request, res: Response) => {
+        const {name, email, password} = req.body;
 
-        res.send(`Hello aaaaaAli, ${name}`);
+       const user = await this.userRepo.create({
+            name,
+            email,
+            password
+        });
+
+       res.send(user);
     };
 
     me = (req: Request, res: Response) => {
         console.log(this);
 
         const {name} = req.params;
-        res.send(`Hello aaaaaAli, ${name}`);
+        res.send(`Hello Ali, ${name}`);
     };
 
     logout = (req: Request, res: Response) => {
