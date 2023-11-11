@@ -1,8 +1,9 @@
 import {Service, Inject} from "typedi";
 import jsonwebtoken from 'jsonwebtoken';
+import {Request, Response} from "express";
 
 import userRepository from "../../../repositories/userRepository";
-import {Application, Request, Response} from "express";
+import {CustomRequest} from "../../../types/request";
 
 @Service()
 export class authController {
@@ -27,18 +28,17 @@ export class authController {
             }
 
             if (match) {
-                const token = jsonwebtoken.sign(
-                    {user}, process.env.SECRET || 'defaultSecret'
+                const access_token = jsonwebtoken.sign(
+                    {user}, process.env.JWT_SECRET || 'defaultSecret'
                 );
 
-                return res.status(200).json({token});
+                return res.status(200).json({access_token});
             } else {
                 return res.status(401).send('Incorrect password');
             }
         });
 
     };
-
 
     register = async (req: Request, res: Response) => {
         const {name, email, password} = req.body;
@@ -52,16 +52,11 @@ export class authController {
         res.send(user);
     };
 
-    me = (req: Request, res: Response) => {
-        console.log(this);
-
-        const {name} = req.params;
-        res.send(`Hello Ali, ${name}`);
+    me = (req: CustomRequest, res: Response) => {
+        res.send(req.user);
     };
 
     logout = (req: Request, res: Response) => {
-        console.log(this);
-
         const {name} = req.params;
         res.send(`Hello aaaaaAli, ${name}`);
     };

@@ -5,7 +5,7 @@ export default abstract class baseRepository implements baseODMInterface {
     public abstract model: Model<any>;
 
     public async getAll() {
-        return await this.model.find({});
+        return await this.model.find({}).exec();
     };
 
     public findById(id: Number) {

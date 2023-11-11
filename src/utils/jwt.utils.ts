@@ -1,14 +1,15 @@
-import jwt from 'jsonwebtoken';
+import jwt, {JwtPayload} from 'jsonwebtoken';
+import {AuthInterface} from "../types/authJWTPayload";
 
 const secret = process.env.JWT_SECRET || 'your-secret-key';
 
 export const generateToken = (userId: number): string => {
-    return jwt.sign({ id: userId }, secret, { expiresIn: '1h' });
+    return jwt.sign({id: userId}, secret, {expiresIn: '1h'});
 };
 
-export const verifyToken = (token: string): jwt.JwtPayload | string => {
+export const verifyToken = (token: string): AuthInterface => {
     try {
-        return jwt.verify(token, secret);
+        return <AuthInterface>jwt.verify(token, process.env.JWT_SECRET || 'defaultValue');
     } catch (error) {
         throw new Error('Token is not valid');
     }

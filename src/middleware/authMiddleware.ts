@@ -1,10 +1,21 @@
-import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/jwt.utils';
+import {Response, NextFunction} from 'express';
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
+import {verifyToken} from '../utils/jwt.utils';
+import {CustomRequest} from "../types/request";
+import {AuthInterface} from "../types/authJWTPayload";
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).send('Authentication token required');
-  }
+
+export const authenticate = (req: CustomRequest, res: Response, next: NextFunction) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).send('Authentication token required');
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+
+    const payload: AuthInterface = verifyToken(token);
+
+    req.user = payload.user;
+    next();
 };
