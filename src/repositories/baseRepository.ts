@@ -27,4 +27,9 @@ export default abstract class baseRepository implements baseODMInterface {
         return this.model.findById(id).deleteOne();
     };
 
+    public async findOne(columnName: any, value: any) {
+        let filter = {[columnName]: value};
+        return await this.model.findOne(filter).exec();
+    }
+
 }

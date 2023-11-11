@@ -1,7 +1,8 @@
 import {Service, Inject} from "typedi";
+import jsonwebtoken from 'jsonwebtoken';
 
 import userRepository from "../../../repositories/userRepository";
-import {Request, Response} from "express";
+import {Application, Request, Response} from "express";
 
 @Service()
 export class authController {
@@ -12,24 +13,43 @@ export class authController {
     }
 
     login = async (req: Request, res: Response) => {
+        const {email, password} = req.body;
 
-        const {name} = req.body;
+        const user = await this.userRepo.findOne('email', email);
 
-        const data = await this.userRepo.getAll();
+        if (!user) {
+            return res.status(401).send('User not found');
+        }
 
-        res.send(data);
+        user.comparePassword(password, async function (err: any, match: boolean) {
+            if (err) {
+                return res.status(500).send('Error comparing passwords');
+            }
+
+            if (match) {
+                const token = jsonwebtoken.sign(
+                    {user}, process.env.SECRET || 'defaultSecret'
+                );
+
+                return res.status(200).json({token});
+            } else {
+                return res.status(401).send('Incorrect password');
+            }
+        });
+
     };
+
 
     register = async (req: Request, res: Response) => {
         const {name, email, password} = req.body;
 
-       const user = await this.userRepo.create({
+        const user = await this.userRepo.create({
             name,
             email,
             password
         });
 
-       res.send(user);
+        res.send(user);
     };
 
     me = (req: Request, res: Response) => {
