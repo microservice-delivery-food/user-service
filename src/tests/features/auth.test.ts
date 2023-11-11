@@ -1,9 +1,10 @@
 // @ts-ignore
 import request from 'supertest';
+import app from "../../app";
 
 
 test('should get 200 code if everything is get', async () => {
-    const api = request('http://localhost:3000');
+    const api = request(app);
 
     await api
         .post('/api/v1/auth/register')
@@ -15,7 +16,7 @@ test('should get 200 code if everything is get', async () => {
 });
 
 test('should get 500 code if email is not valid', async () => {
-    const api = request('http://localhost:3000');
+    const api = request(app);
 
     await api
         .post('/api/v1/auth/register')
@@ -27,7 +28,7 @@ test('should get 500 code if email is not valid', async () => {
 });
 
 test('should get 500 if password smaller than 6 character', async () => {
-    const api = request('http://localhost:3000');
+    const api = request(app);
 
     await api
         .post('/api/v1/auth/register')
