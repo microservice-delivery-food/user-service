@@ -1,15 +1,25 @@
-FROM node:18-alpine
-
+#-------------------------------------------#
+#           Downloads dependencies          #
+#-------------------------------------------#
+FROM node:19.4.0-alpine AS builder
 
 WORKDIR /home/node/app
 
-COPY package*.json ./
+COPY ./package.json ./
 
+RUN npm i
+        
+#-------------------------------------------#
+#            Creates the image              #
+#-------------------------------------------#
+FROM node:19.4.0-alpine
 
-RUN npm install
+WORKDIR /home/node/app
+
+COPY --chown=node:node --from=builder /home/node/app/node_modules ./node_modules
 
 COPY --chown=node:node . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD [ "npm", "run", "dev" ]
+CMD ["npm","start"]
