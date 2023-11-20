@@ -2,7 +2,7 @@ import {Response, NextFunction} from 'express';
 
 import {verifyToken} from '../utils/jwt.utils';
 import {CustomRequest} from "../types/request";
-import {AuthInterface} from "../types/authJWTPayload";
+import {AuthInterface} from "../types/auth.jwt.payload";
 
 
 export const authenticate = (req: CustomRequest, res: Response, next: NextFunction) => {
